@@ -1,48 +1,41 @@
-# Astro Starter Kit: Basics
+# PokéGo
 
-```sh
-npm create astro@latest -- --template basics
-```
+Este proyecto es una web estática construida con Astro, que consume la PokeAPI (https://pokeapi.co/) para mostrar información detallada sobre Pokémons. Se utiliza TypeScript para el desarrollo, SolidJS para la gestión de favoritos y se despliega en GitHub Pages.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Características principales
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+* **Generación estática de páginas de Pokémon:** Cada página de Pokémon se genera estáticamente durante el proceso de build, utilizando Astro y la PokeAPI. Esto garantiza un rendimiento óptimo y una excelente experiencia de usuario.
+* **Paginación estática:** Se implementa la paginación estática para navegar eficientemente a través de la lista de Pokémons.
+* **Gestión de favoritos con SolidJS y LocalStorage:** Los usuarios pueden guardar sus Pokémons favoritos utilizando LocalStorage. Un componente de SolidJS se encarga de la interacción con el LocalStorage y la actualización de la interfaz de usuario.
+* **TypeScript:** El proyecto está desarrollado en TypeScript, lo que proporciona seguridad de tipos y facilita el mantenimiento del código.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Tecnologías utilizadas
 
-## 🚀 Project Structure
+* Astro
+* TypeScript
+* SolidJS
+* PokeAPI
+* LocalStorage
+* GitHub Pages
 
-Inside of your Astro project, you'll see the following folders and files:
+## 🧞 Comandos
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Todos los comandos se ejecutan desde la raíz del proyecto, desde una terminal:
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+| Comando                   | Acción                                                    |
+| :------------------------ | :---------------------------------------------------------|
+| `npm install`             | Instalar dependencias                                     |
+| `npm run dev`             | Iniciar el servidor de manera local `localhost:4321`      |
+| `npm run build`           | Se realiza el build en la carpeta `./dist/`               |
+| `npm run preview`         | Se puede visualizar el preview del build                  |
 
-## 🧞 Commands
+## Enlaces
+Puedes ver este proyecto en el siguiente link:<a href="https://judithbolanos.github.io/pokego/" target="_blank" rel="noopener noreferrer">https://judithbolanos.github.io/pokego/</a>.
 
-All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Imagenes
+![pokelist](https://judithbl.com/uploads/pokelist.png)
 
-## 👀 Want to learn more?
+![pokefav](https://judithbl.com/uploads/pokefav.png)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+![poke single](https://judithbl.com/uploads/pokesingle.png) 
