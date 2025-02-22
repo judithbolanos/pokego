@@ -1,5 +1,6 @@
 import type { Favoritepokemon } from "src/interfaces/favoritepokemon"
 import { Show , createSignal, type Component } from "solid-js"
+import { siteConfig } from "@utils/config"
 
 interface Props{
     pokemon: Favoritepokemon
@@ -17,7 +18,7 @@ export const FavoritePokemonCard:Component<Props> = ({pokemon}) => {
   return (
     <Show when={isvisible()}>
       <div class="flex flex-col justify-center items-center">
-        <a class="pt-3 pb-1" href={`/pokemons/${pokemon.name}`}>
+        <a class="pt-3 pb-1" href={`${siteConfig.basepath}/pokemons/${pokemon.name}`}>
         <img src={ImgSrc} alt={pokemon.name} width="96" height="96" style={`view-transition-name:${pokemon.name}-image`}/>
           <p class="capitalize text-center text-lg">{pokemon.name}</p>
         </a>
