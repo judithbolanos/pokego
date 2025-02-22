@@ -1,0 +1,37 @@
+---
+const All_Links = [
+    { href:`${siteConfig.basepath}`,text: "Home"},
+    { href:`${siteConfig.basepath}favorites`, text: "Favoritos" },
+    { href:`${siteConfig.basepath}pokemons/1`,  text: "Lista de pokemons" },
+];
+const current_url = Astro.url.pathname;
+import logopng from "@img/logo.png"
+import { Image } from "astro:assets";
+import {siteConfig} from "@utils/config.ts"
+---
+
+<nav class="bg-gray-950 mb-5 px-5">
+    <div class="container flex items-center justify-between mx-auto py-5 text-gray-600 capitalize dark:text-gray-300">
+        <div class="flex gap-3 items-center">
+            <a class="flex gap-3 items-center" href=`/`>
+                <Image src={logopng} width={80} height={80} alt="logo"/>
+                <h1 class="text-amber-50 text-3xl font-bold">{siteConfig.title}</h1>
+            </a>
+        </div>
+        <div class="flex items-center justify-end p-6">
+            {All_Links.map(({href, text}) => (
+            <div>
+                    <a href={href} class="text-gray-800 dark:text-gray-200 mx-1.5 sm:mx-6">
+                        {text}
+                    </a>
+                    { current_url == href ? ( 
+                        <div transition:name="menu-line" class="border-b-2 border-teal-500 mx-4" />
+                    ) : (
+                        <div class="border-b-2 border-transparent" />
+                    )}
+            </div>
+            ))}
+        </div>
+
+    </div>
+</nav>

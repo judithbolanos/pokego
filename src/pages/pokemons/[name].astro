@@ -1,0 +1,106 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import CardPokemon from "../../components/pokemons/CardPokemon.astro";
+import type { PokemonResponse } from "../../interfaces/pokemon.response.ts";
+import Title from "@components/shared/Title.astro";
+import {Icon} from "astro-icon/components"
+export const getStaticPaths = (async () => {
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    const { results } = await resp.json() as PokemonResponse;
+    return results.map(({name,url})=> ({
+        params:{name},
+        props: {url,id: url.split("/").at(-2)}
+    }))
+}) satisfies GetStaticPaths;
+ const {name} = Astro.params;
+ const {url , id } = Astro.props;
+ const audio = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
+ const image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+---
+
+<Layout title={` Pokemon -  ${name}`} descripcion=`Información del pokemon ${name}` image={image} >
+    <div class="flex flex-row items-center justify-center">
+        <Title>{name}</Title>
+        <button class="ml-4 hover:animate-pulse" id="btn-favorite" data-name={name} data-id={id}>
+            <Icon data-outline name="heart-empty" size={50} />
+            <Icon data-full class="hidden" name="heart-full" size={50} />
+        </button>
+    </div>
+    
+    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
+        <div>
+            <button class=" flex gap-2 items-center justify-center bg-teal-800 text-amber-50 rounded-2xl px-5 py-2" onclick="history.back()"> <Icon name={'back'} size={20} /> Regresar</button>
+        </div>
+        <CardPokemon name={name} url={url} isBig />
+        <h3 class="text-center text-lg"> Escucha el sonido que realiza este Pokémon </h3>
+        <audio controls class="mt-5">
+            <source src={audio} type="audio/ogg">
+            Your browser does not support the audio element
+        </audio>
+    </section>
+</Layout>
+<script>
+    import type {Favoritepokemon} from "../../interfaces/favoritepokemon";
+    const handlePageLoad = ()=>{
+        let FavoritePokemons: Favoritepokemon[] = JSON.parse(localStorage.getItem("favorites")??'[]');
+        const btn_favs = document.getElementById("btn-favorite") as HTMLButtonElement;
+        if(!btn_favs) return
+        const name = btn_favs.dataset.name ?? '';
+        const id = btn_favs.dataset.id ?? '';
+        const heartOutline = btn_favs.querySelector("[data-outline]") as HTMLAnchorElement;
+        const heartFull = btn_favs.querySelector("[data-full]") as HTMLAnchorElement;
+        const toggleFavsIcon =  ()=>{
+            const isFavorite = FavoritePokemons.some(fav=>fav.name == name);
+            if(isFavorite){
+                if(!heartOutline.classList.contains("hidden")){
+                    heartOutline.classList.add("hidden");
+                }
+                heartFull.classList.remove("hidden");
+            }else{
+                if(!heartFull.classList.contains("hidden")){
+                    heartFull.classList.add("hidden");
+                    heartOutline.classList.remove("hidden");
+                }
+            }
+        }
+        toggleFavsIcon();
+        const toggleFavorites = ()=>{
+            const isFavorite = FavoritePokemons.some(fav=>fav.name == name);
+            if(isFavorite){
+                //hay que removerlo
+                FavoritePokemons = FavoritePokemons.filter(fav => fav.name !== name);
+            }else{
+                //hay que agregarlo
+                FavoritePokemons.push({
+                    id:+id,
+                    name:name,
+                });
+            }
+            localStorage.setItem("favorites", JSON.stringify(FavoritePokemons));
+        }
+        btn_favs.addEventListener("click", e=>{
+            console.log("name", name)
+            heartOutline.classList.toggle("hidden");
+            heartFull.classList.toggle("hidden");
+            toggleFavorites();
+            toggleFavsIcon();
+        })
+    }
+    document.addEventListener("astro:page-load", handlePageLoad);
+</script>
+<style>
+    a {
+        @apply hover:underline;
+    }
+    [data-icon="heart-empty"] , [data-icon="heart-full"] {
+        fill:#2E39F0;
+    }
+    #btn-favorite{
+        cursor: pointer;
+        color: #f02e52;
+        background: transparent;
+        border: none;
+        //@apply hover:animate-pulse;
+    }
+</style>

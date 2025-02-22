@@ -1,0 +1,19 @@
+---
+import Title from "@components/shared/Title.astro";
+import Layout from "src/layouts/Layout.astro";
+import {Counter} from "@components/counter";
+const InitialValue = 20;
+
+---
+
+<Layout title='Islas'>
+	<Title>Prueba islas con solid js</Title>
+	<Counter
+    transition:persist="counter"
+    transition:persist-props
+    client:load initialValue={InitialValue}>
+    <Title>Counter islands children</Title>
+    </Counter>
+
+
+</Layout>

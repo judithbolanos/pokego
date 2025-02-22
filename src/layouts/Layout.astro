@@ -1,22 +1,48 @@
+---
+import {siteInfo} from "../const/site-info";
+interface Props {
+	title?: string,
+	image?:string,
+	descripcion?:string
+}
+ const { title = siteInfo.title , descripcion = siteInfo.descripcion , image } = Astro.props;
+import { ViewTransitions } from "astro:transitions";
+import "../styles/global.css"
+import NavBar from "@components/shared/NavBar.astro";
+import Footer from "@components/shared/Footer.astro";
+import Balls from "@components/shared/Balls.astro"
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+		<link rel="shortcut icon" href="/favicon/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content="Pokemons" />
+		<link rel="manifest" href="/favicon/site.webmanifest" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={descripcion} />
+		<meta property="og:image" content={image} />
+		<meta property="autor" content={siteInfo.autor}/> 
+		<title>{title}</title>
+
+		<ViewTransitions/>
 	</head>
-	<body>
-		<slot />
+	<body class="bg-slate-800 text-slate-100 relative">
+		<NavBar />
+		<main class="m-auto max-w-6xl min-h-100 py-5">
+			<slot />
+		</main>
+		<Footer />
+		<Balls />
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+
+
+

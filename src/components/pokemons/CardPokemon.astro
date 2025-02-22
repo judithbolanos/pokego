@@ -1,0 +1,50 @@
+---
+ import type { PokemonCardTs } from "../../interfaces/pokemon.card";
+ interface Props {
+    name: string,
+    url: string,
+    isBig?:boolean
+ }
+ const {name , url , isBig = false} = Astro.props;
+ const getinfo = await fetch(url);
+ const data = await getinfo.json() as PokemonCardTs;
+ const cardimage = data.sprites?.other?.["official-artwork"]?.front_default ?? "/placeholder.png";
+ const habilities = data.abilities;
+---
+
+<a class="p-3" href={`/pokemons/${name}`} class:list={
+    [   {"flex flex-col": isBig==false},
+        {"flex": isBig==true},
+        "rounded justify-center items-center p-2",
+        {border:!isBig,}
+    ]
+}>
+    <div >
+        <img transition:name=`${name}-image` class:list={[
+            'image-card',
+            {"w-22 h-22": isBig==false},
+            {"w-120 h-120": isBig==true},
+        ]} src={cardimage} alt={name}>
+    </div>
+    <div class:list={[
+        {"flex flex-col items-center px-4": isBig==true},
+        {"flex flex-col items-center": isBig==false},
+    ]}>
+        <h3 class:list={[
+            "capitalize",
+            {"text-5xl mb-4 hidden": isBig==true}
+        ]}>{name}</h3>
+        <ul class="flex gap-2 items-center justify-center py-3 flex-wrap">
+            {habilities.map(el =>(
+                <li class="px-4 py-2 bg-teal-900 text-amber-50 font-bold rounded-2xl text-sm">
+                    {el.ability?.name}
+                </li>
+            ))}
+        </ul>
+    </div>
+</a>
+<style>
+    .image-card{
+        filter: drop-shadow(2px 4px 6px #0b534e);
+    }
+</style>
